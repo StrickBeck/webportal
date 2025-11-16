@@ -8,8 +8,7 @@
           </span>
         </NuxtLink>
 
-        <button
-          class="rounded-full bg-slate-900/60 px-3 py-2"
+        <button class="rounded-full bg-slate-900/60 px-3 py-2"
           @click="isOpen = !isOpen"
         >
           <div class="space-y-1">
@@ -35,15 +34,24 @@
         </button>
       </nav>
 
-      <div
-        v-if="isOpen"
-        class="fixed right-4 top-16 w-2/3 max-w-xs bg-slate-900/95 rounded-xl shadow-lg px-6 py-4 space-y-3 text-sm uppercase tracking-wide text-white"
+      <Transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="opacity-0 -translate-y-2 scale-95"
+        enter-to-class="opacity-100 translate-y-0 scale-100"
+        leave-active-class="transition duration-200 ease-in"
+        leave-from-class="opacity-100 translate-y-0 scale-100"
+        leave-to-class="opacity-0 -translate-y-2 scale-95"
       >
-        <NuxtLink to="/temperature" class="block">Temperature</NuxtLink>
-        <NuxtLink to="/water-level" class="block">Water Level</NuxtLink>
-        <NuxtLink to="/map" class="block">Map</NuxtLink>
-        <NuxtLink to="/pathogen" class="block">Pathogen Infection</NuxtLink>
-      </div>
+        <div
+          v-if="isOpen"
+          class="fixed right-4 top-16 w-2/3 max-w-xs bg-slate-900/95 rounded-xl shadow-lg px-6 py-4 space-y-3 text-sm uppercase tracking-wide text-white"
+        >
+          <NuxtLink to="/temperature" class="block">Temperature</NuxtLink>
+          <NuxtLink to="/water" class="block">Water Level</NuxtLink>
+          <NuxtLink to="/map" class="block">Map</NuxtLink>
+          <NuxtLink to="/polution" class="block">Pathogen Infection</NuxtLink>
+        </div>
+      </Transition>
     </header>
 
     <main class="flex-1">
