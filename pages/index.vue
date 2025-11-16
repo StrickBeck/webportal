@@ -1,3 +1,5 @@
 <template>
-    <h1>map</h1>
+<h1>
+    home
+</h1>
 </template>

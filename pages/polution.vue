@@ -1,3 +1,3 @@
 <template>
-    <h1>map</h1>
+    <h1>polution</h1>
 </template>
