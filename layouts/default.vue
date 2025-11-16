@@ -8,7 +8,7 @@
           </span>
         </NuxtLink>
 
-        <button class="rounded-full bg-slate-900/60 px-3 py-2"
+        <button ref="toggleRef" class="rounded-full bg-slate-900/60 px-3 py-2"
           @click="isOpen = !isOpen"
         >
           <div class="space-y-1">
@@ -43,13 +43,14 @@
         leave-to-class="opacity-0 -translate-y-2 scale-95"
       >
         <div
+          ref="menuRef"
           v-if="isOpen"
           class="fixed right-4 top-16 w-2/3 max-w-xs bg-slate-900/95 rounded-xl shadow-lg px-6 py-4 space-y-3 text-sm uppercase tracking-wide text-white"
         >
-          <NuxtLink to="/temperature" class="block">Temperature</NuxtLink>
-          <NuxtLink to="/water" class="block">Water Level</NuxtLink>
-          <NuxtLink to="/map" class="block">Map</NuxtLink>
-          <NuxtLink to="/polution" class="block">Pathogen Infection</NuxtLink>
+          <NuxtLink to="/temperature" class="block hover:underline">Temperature</NuxtLink>
+          <NuxtLink to="/water" class="block hover:underline">Water Level</NuxtLink>
+          <NuxtLink to="/map" class="block hover:underline">Map</NuxtLink>
+          <NuxtLink to="/polution" class="block hover:underline">Pathogen Infection</NuxtLink>
         </div>
       </Transition>
     </header>
@@ -67,13 +68,38 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src="/public/images/googlemap.webp" class="w-8 h-8 sm:w-8 sm:h-10" />
+        <img src="/public/images/googlemap.webp" class="w-6 h-8 sm:w-8 sm:h-10" />
       </a>
     </footer>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+
 const isOpen = ref(false)
+const menuRef = ref(null)
+const toggleRef = ref(null)
+
+const handleClickOutside = event => {
+  if (!isOpen.value) return
+
+  const menuEl = menuRef.value
+  const toggleEl = toggleRef.value
+  const target = event.target
+
+  if ((menuEl && menuEl.contains(target)) || (toggleEl && toggleEl.contains(target))) {
+    return
+  }
+
+  isOpen.value = false
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
