@@ -3,7 +3,7 @@
     <header class="absolute top-0 left-0 w-full z-20">
       <nav class="flex items-center justify-between px-4 sm:px-6 md:px-10 py-3 text-white">
         <NuxtLink to="/" class="flex items-center">
-          <span class="text-2xl font-semibold tracking-widest">
+          <span class="text-2xl font-semibold tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             SKOHydroVision
           </span>
         </NuxtLink>

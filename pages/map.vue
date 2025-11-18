@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6">
+    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6 bg-gray-200">
         <div class="h-16"></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div v-for="(value,index) in optine" :key="index" class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-blue-100">
@@ -13,12 +13,12 @@
         <div class="flex flex-wrap gap-6 w-full justify-center">
             <div class="w-full lg:basis-3/4 bg-white rounded-2xl shadow-lg border border-blue-100 overflow-hidden">
             <div class="h-full w-full">
-                <div style="height:600px;width:1330px" >
-                <LMap :zoom="mapZoom" :center="mapCenter" :use-global-leaflet="false">
+                <div class="w-full h-[400px] md:h-[500px] lg:h-[600px]" >
+                <LMap :zoom="mapZoom" :center="mapCenter" :use-global-leaflet="false" class="w-full h-full">
                 <LTileLayer 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&copy; OpenStreetMap contributors"/>
-                <LMarker :lat-lng="petropavl" @click="zoomToMarker(petropavl[0], petropavl[1])">
+                <LMarker :lat-lng="petropavl" @click="zoomToMarker(petropavl[0], petropavl[1])" >
                     <LTooltip permanent direction="top">Petropavlosk (NKR)</LTooltip>
                     <LPopup>Petropavlosk, North Kazakhstan Region</LPopup>
                 </LMarker>
@@ -65,24 +65,9 @@
 import {ref,reactive} from 'vue'
 import {LMap,LTileLayer,LMarker,LTooltip,LPopup} from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css'
+import { LakeData,lakes } from '~/components/data';
 
 type LatLngTuple = [number,number]
-
-interface Lake{
-    name:string,
-    lat:number,
-    lng:number,
-    id:number,
-    status:string
-}
-const lakes = ref<Lake[]>([
-    { name: 'Озеро Пестрое', lat: 54.836699, lng: 69.111328 ,id:1,status:'lake'},
-    { name: 'Озеро Белое', lat: 54.927154, lng: 69.254322 ,id:2,status:'lake'},
-    { name: 'Озеро Горькое', lat: 54.947573, lng: 68.951122 ,id:3,status:'lake'},
-    { name: 'Озеро Поганка', lat: 54.921209, lng: 69.053476 ,id:4,status:'lake'},
-    { name: 'Озеро Дикое', lat: 54.840156, lng: 69.131957 ,id:5,status:'lake'},
-    { name: 'Ishim' , lat:54.893110,lng:69.127836,id:6,status:'river'}
-])
 
 const petropavl = ref<LatLngTuple>([54.88,69.16])
 
@@ -92,15 +77,15 @@ const mapZoom = ref(11)
 const optine = ref([
     {
         name:"Total Water Body",
-        count:lakes.value.length
+        count:lakes.length
     },
     {
-        name:"Revers",
-        count:lakes.value.filter(lake => lake.status === 'river').length
+        name:"Rivers",
+        count:lakes.filter(lake => lake.status === 'river').length
     },
     {
         name:"Lakes & Reservoirs",
-        count:lakes.value.filter(lake => lake.status === 'lake').length
+        count:lakes.filter(lake => lake.status === 'lake').length
     }
 ])
 
