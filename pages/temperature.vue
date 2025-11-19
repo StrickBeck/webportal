@@ -1,9 +1,11 @@
 <template>
-    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6 bg-gray-200">
+    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6 bg-gray-900">
         <div class="h-16"></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div v-for="(value,index) in summaryCards" :key="index" class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-blue-100">
-                <div class="frame_style"></div>
+                <div class="frame_style">
+                    <NuxtImg :src="value.icon" width="30" height="30" :alt="value.label" />
+                </div>
                 <div>
                     <p class="text-sm text-blue-600">{{ value.label }}</p>
                     <p class="text-2xl text-blue-900">{{ value.total }}</p>
@@ -62,7 +64,9 @@
             </div>
             <div class="flex flex-col w-full lg:basis-1/5 space-y-6">
                 <div class="flex flex-col bg-white rounded-2xl p-6 shadow-md border border-blue-100 items-center justify-start">
-                    <div class="frame_style"></div>
+                    <div class="frame_style">
+                        <NuxtImg src="/images/kaplya.png" width="28" height="28" alt="Water drop icon" />
+                    </div>
                     <p class="text-center text-sm text-blue-600">Select a water body to view its detailed temperature.</p>
                 </div>
                 <div class="w-full max-w-md mx-auto bg-gray-50 rounded-2xl shadow-2xl overflow-hidden">
@@ -140,9 +144,9 @@ const selectBody = (id: number) => {
 }
 
 const summaryCards = computed(() => [
-    { label: 'Total Water Body', total: lakes.length },
-    { label: 'Rivers', total: lakes.filter((lake) => lake.status === 'river').length },
-    { label: 'Lakes & Reservoirs', total: lakes.filter((lake) => lake.status === 'lake').length }
+    { label: 'Total Water Body', total: lakes.length, icon: '/images/kaplya.png' },
+    { label: 'Rivers', total: lakes.filter((lake) => lake.status === 'river').length, icon: '/images/river.png' },
+    { label: 'Lakes & Reservoirs', total: lakes.filter((lake) => lake.status === 'lake').length, icon: '/images/lake.png' }
 ])
 </script>
 

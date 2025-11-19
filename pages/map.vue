@@ -1,9 +1,11 @@
 <template>
-    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6 bg-gray-200">
+    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6 bg-gray-900">
         <div class="h-16"></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div v-for="(value,index) in optine" :key="index" class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-blue-100">
-                <div class="frame_style"></div>
+                <div class="frame_style">
+                   <NuxtImg :src="value.images"   width="30" height="30"></NuxtImg>
+                </div>
                 <div>
                     <p class="text-sm text-blue-600">{{ value.name }}</p>
                     <p class="text-2xl text-blue-900">{{ value.count }}</p>
@@ -38,7 +40,9 @@
             </div>
             <div class="flex flex-col w-full lg:basis-1/5 space-y-6">
                 <div class="flex flex-col bg-white rounded-2xl p-6 shadow-md border border-blue-100 items-center justify-start">
-                <div class="frame_style"></div>
+                <div class="frame_style">
+                    <NuxtImg src="/images/kaplya.png" width="28" height="28" alt="Water drop icon" />
+                </div>
                 <p class="text-center text-wrap text-sm text-blue-600">Select a marker on the map to view details</p>
                 </div>
                 <div class="w-full max-w-md mx-auto bg-gray-50 rounded-2xl shadow-2xl overflow-hidden">
@@ -50,6 +54,7 @@
                             <button v-for="body in lakes" :key="body.id" 
                             @click="zoomToMarker(body.lat, body.lng)"
                             class="w-full px-6 py-4 flex items-center gap-3 hover:bg-blue-50 transition-colors text-left border-b border-gray-400 last:border-b-0">
+                                <NuxtImg :src="getStatusIcon(body.status)" width="24" height="24" class="shrink-0" />
                                 <span class="text-sm text-blue-600 font-medium">{{ body.name }}</span>
                             </button>
                         </div>
@@ -74,18 +79,27 @@ const petropavl = ref<LatLngTuple>([54.88,69.16])
 const mapCenter = ref<LatLngTuple>([54.88,69.16])
 const mapZoom = ref(11)
 
+const statusIconMap: Record<string, string> = {
+    river: '/images/river.png',
+    lake: '/images/lake.png',
+    default: '/images/kaplya.png'
+}
+
 const optine = ref([
     {
         name:"Total Water Body",
-        count:lakes.length
+        count:lakes.length,
+        images:"/images/kaplya.png"
     },
     {
         name:"Rivers",
-        count:lakes.filter(lake => lake.status === 'river').length
+        count:lakes.filter(lake => lake.status === 'river').length,
+        images:"/images/river.png"
     },
     {
         name:"Lakes & Reservoirs",
-        count:lakes.filter(lake => lake.status === 'lake').length
+        count:lakes.filter(lake => lake.status === 'lake').length,
+        images:"/images/lake.png"
     }
 ])
 
@@ -93,6 +107,10 @@ const optine = ref([
 const zoomToMarker = (lat: number, lng: number) => {
     mapCenter.value = [lat, lng]
     mapZoom.value = 14
+}
+
+const getStatusIcon = (status: string) => {
+    return statusIconMap[status] ?? statusIconMap.default
 }
 </script>
 

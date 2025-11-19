@@ -72,14 +72,12 @@
 import { ref, computed } from 'vue';
 import { lakes } from '~/components/data';
 
-const selectedWaterBody = ref('Ishim'); // Default to 'Ishim'
+const selectedWaterBody = ref('Ishim'); 
 
-// Computed property to find the selected lake
 const selectedLake = computed(() => {
   return lakes.find(lake => lake.name === selectedWaterBody.value);
 });
 
-// Safety assessment computed properties
 const safetyAssessment = computed(() => {
   const lake = selectedLake.value;
   if (!lake) return { percentage: 0 };
@@ -115,7 +113,7 @@ const safetyStatus = computed(() => {
 const safetyColor = computed(() => {
   const percentage = safetyPercentage.value;
   if (percentage >= 90) return 'text-green-100';
-  if (percentage >= 75) return 'text-lime-100';
+  if (percentage >= 75) return 'text-green-100';
   if (percentage >= 60) return 'text-yellow-100';
   if (percentage >= 40) return 'text-orange-100';
   return 'text-red-100';

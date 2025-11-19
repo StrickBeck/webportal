@@ -55,10 +55,10 @@ export class LakeData {
 }
 
 export const lakes = reactive<LakeData[]>([
-    new LakeData('Озеро Пестрое', 54.836699, 69.111328, 1, 'lake'),
-    new LakeData('Озеро Белое', 54.927154, 69.254322, 2, 'lake'),
-    new LakeData('Озеро Горькое', 54.947573, 68.951122, 3, 'lake'),
-    new LakeData('Озеро Поганка', 54.921209, 69.053476, 4, 'lake'),
-    new LakeData('Озеро Дикое', 54.840156, 69.131957, 5, 'lake'),
-    new LakeData('Ishim', 54.893110, 69.127836, 6, 'river')
+    new LakeData('Lake Pestroe', 54.836699, 69.111328, 1, 'lake'),
+    new LakeData('Lake Beloe', 54.927154, 69.254322, 2, 'lake'),
+    new LakeData('Lake Gorkoe', 54.947573, 68.951122, 3, 'lake'),
+    new LakeData('Lake Poganka', 54.921209, 69.053476, 4, 'lake'),
+    new LakeData('Lake Dikoe', 54.840156, 69.131957, 5, 'lake'),
+    new LakeData('River Ishim', 54.893110, 69.127836, 6, 'river')
 ])
