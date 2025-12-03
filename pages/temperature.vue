@@ -1,91 +1,106 @@
 <template>
-    <div class="w-full h-full items-center justify-center p-4 lg:p-16 space-y-6 bg-gray-900">
-        <div class="h-16"></div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div v-for="(value,index) in summaryCards" :key="index" class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-blue-100">
-                <div class="frame_style">
-                    <NuxtImg :src="value.icon" width="30" height="30" :alt="value.label" />
-                </div>
-                <div>
-                    <p class="text-sm text-blue-600">{{ value.label }}</p>
-                    <p class="text-2xl text-blue-900">{{ value.total }}</p>
+    <div class="min-h-screen w-full bg-slate-950 text-slate-100">
+        <header class="h-16"></header>
+        <div class="mx-auto max-w-6xl items-center justify-center space-y-6 p-4 sm:p-8 lg:p-12">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div v-for="(value,index) in summaryCards" :key="index" class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-md backdrop-blur">
+                    <div class="frame_style">
+                        <NuxtImg :src="value.icon" width="30" height="30" :alt="value.label" />
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-300">{{ value.label }}</p>
+                        <p class="text-2xl font-semibold text-white">{{ value.total }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex flex-wrap gap-6 w-full justify-center">
-            <div class="w-full lg:basis-3/4 bg-white rounded-2xl shadow-lg border border-blue-100 overflow-hidden">
-                <div class="h-full w-full">
-                    <div class="p-6 space-y-6">
-                        <div class="flex flex-col gap-2">
-                            <h2 class="text-2xl text-blue-900 font-semibold">Water Temperature Overview</h2>
-                        </div>
-                        <div v-if="activeBody" class="rounded-2xl border border-blue-100 p-4 space-y-2 bg-gradient-to-br from-white to-blue-50/40">
-                            <p class="text-xs text-gray-500 uppercase tracking-wide">Selected water body</p>
-                            <p class="text-xl font-semibold text-blue-900">{{ activeBody.name }}</p>
-                            <p class="text-sm text-gray-600">{{ activeBody.type }} &middot; {{ activeBody.location }}</p>
-                        </div>
-                        <div v-if="activeBody" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="rounded-2xl bg-blue-50 p-4 border border-blue-100">
-                                <p class="text-xs uppercase tracking-wide text-blue-600">Min</p>
-                                <p class="text-3xl font-semibold text-blue-900">{{ activeBody.min.toFixed(1) }}&deg;C</p>
-                                <p class="text-sm text-gray-500">Lowest reading</p>
+            <div class="flex w-full flex-wrap justify-center gap-6">
+                <div class="w-full lg:basis-3/4 rounded-3xl border border-white/10 bg-slate-900/70 shadow-xl backdrop-blur">
+                    <div class="h-full w-full">
+                        <div class="space-y-6 p-6 sm:p-8">
+                            <div class="flex flex-col gap-2">
+                                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Temperature</p>
+                                <h2 class="text-2xl font-semibold text-white">Water Temperature Overview</h2>
                             </div>
-                            <div class="rounded-2xl bg-blue-600 text-white p-4 border border-blue-100">
-                                <p class="text-xs uppercase tracking-wide opacity-70">Avg</p>
-                                <p class="text-3xl font-semibold">{{ activeBody.avg.toFixed(1) }}&deg;C</p>
-                                <p class="text-sm opacity-75">Daily average</p>
+                            <div v-if="activeBody" class="space-y-2 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <p class="text-xs uppercase tracking-wide text-slate-400">Selected water body</p>
+                                <p class="text-xl font-semibold text-white">{{ activeBody.name }}</p>
+                                <p class="text-sm text-slate-300">{{ activeBody.type }} - {{ activeBody.location }}</p>
                             </div>
-                            <div class="rounded-2xl bg-orange-50 p-4 border border-orange-100">
-                                <p class="text-xs uppercase tracking-wide text-orange-600">Max</p>
-                                <p class="text-3xl font-semibold text-orange-700">{{ activeBody.max.toFixed(1) }}&deg;C</p>
-                                <p class="text-sm text-gray-500">Highest reading</p>
+                            <div v-if="activeBody" class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <p class="text-xs uppercase tracking-wide text-slate-300">Min</p>
+                                    <p class="text-3xl font-semibold text-white">{{ activeBody.min.toFixed(1) }}&deg;C</p>
+                                    <p class="text-sm text-slate-400">Lowest reading</p>
+                                </div>
+                                <div class="rounded-2xl border border-white/10 bg-gradient-to-br from-sky-500 to-cyan-500 p-4 text-slate-950">
+                                    <p class="text-xs uppercase tracking-wide opacity-70">Avg</p>
+                                    <p class="text-3xl font-semibold">{{ activeBody.avg.toFixed(1) }}&deg;C</p>
+                                    <p class="text-sm opacity-80">Daily average</p>
+                                </div>
+                                <div class="rounded-2xl border border-white/10 bg-orange-500/15 p-4">
+                                    <p class="text-xs uppercase tracking-wide text-orange-200">Max</p>
+                                    <p class="text-3xl font-semibold text-white">{{ activeBody.max.toFixed(1) }}&deg;C</p>
+                                    <p class="text-sm text-orange-100">Highest reading</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rounded-2xl border border-blue-100 p-4">
-                            <p class="text-sm text-blue-900 font-semibold mb-3">All temperatures</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div v-for="body in temperatureBodies" :key="body.id" class="border border-blue-50 rounded-xl p-4 bg-white shadow-sm">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <p class="text-sm text-blue-900 font-semibold">{{ body.name }}</p>
-                                            <p class="text-xs text-gray-500">{{ body.type }} &middot; {{ body.location }}</p>
+                            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <p class="mb-3 text-sm font-semibold text-white">All temperatures</p>
+                                <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                                    <div v-for="body in temperatureBodies" :key="body.id" class="rounded-xl border border-white/10 bg-slate-900/70 p-4 shadow-sm">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <p class="text-sm font-semibold text-white">{{ body.name }}</p>
+                                                <p class="text-xs text-slate-400">{{ body.type }} - {{ body.location }}</p>
+                                            </div>
+                                            <p class="text-sm font-semibold text-sky-200">{{ body.avg.toFixed(1) }}&deg;C avg</p>
                                         </div>
-                                        <p class="text-sm font-semibold text-blue-600">{{ body.avg.toFixed(1) }}&deg;C avg</p>
-                                    </div>
-                                    <div class="flex items-center justify-between text-xs text-gray-500 mt-2">
-                                        <span>Min {{ body.min.toFixed(1) }}&deg;C</span>
-                                        <span>Max {{ body.max.toFixed(1) }}&deg;C</span>
+                                        <div class="mt-2 flex items-center justify-between text-xs text-slate-400">
+                                            <span>Min {{ body.min.toFixed(1) }}&deg;C</span>
+                                            <span>Max {{ body.max.toFixed(1) }}&deg;C</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex flex-col w-full lg:basis-1/5 space-y-6">
-                <div class="flex flex-col bg-white rounded-2xl p-6 shadow-md border border-blue-100 items-center justify-start">
-                    <div class="frame_style">
-                        <NuxtImg src="/images/kaplya.png" width="28" height="28" alt="Water drop icon" />
-                    </div>
-                    <p class="text-center text-sm text-blue-600">Select a water body to view its detailed temperature.</p>
-                </div>
-                <div class="w-full max-w-md mx-auto bg-gray-50 rounded-2xl shadow-2xl overflow-hidden">
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                        <div class="px-6 py-4 border-b border-gray-200">
-                            <h2 class="text-sm font-medium text-gray-700">All Water Bodies</h2>
+                <div class="flex w-full flex-col space-y-6 lg:basis-1/5">
+                    <div class="flex flex-col items-center justify-start rounded-2xl border border-white/10 bg-white/5 p-6 shadow-md backdrop-blur">
+                        <div class="frame_style">
+                            <NuxtImg src="/images/kaplya.png" width="28" height="28" alt="Water drop icon" />
                         </div>
-                        <div class="max-h-80 overflow-y-auto">
+                        <p class="text-center text-sm text-slate-200">Select a water body to view its detailed temperature.</p>
+                    </div>
+                    <div id="water-bodies-temp" class="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 shadow-xl">
+                        <div class="flex items-center justify-between gap-2 border-b border-white/10 px-6 py-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Inventory</p>
+                                <p class="text-lg font-semibold text-white">Water bodies</p>
+                            </div>
+                            <span class="rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-slate-100 ring-1 ring-white/10">{{ temperatureBodies.length }} total</span>
+                        </div>
+                        <div class="divide-y divide-white/5 overflow-y-auto max-h-[520px]">
                             <button
                                 v-for="body in temperatureBodies"
                                 :key="body.id"
                                 @click="selectBody(body.id)"
                                 :class="[
-                                    'w-full px-6 py-4 flex items-center gap-3 transition-colors text-left border-b border-gray-100 last:border-b-0',
-                                    body.id === selectedBodyId ? 'bg-blue-50' : 'bg-white hover:bg-blue-50'
+                                    'group flex w-full items-center justify-between gap-3 px-6 py-4 text-left transition',
+                                    body.id === selectedBodyId ? 'bg-white/10' : 'hover:bg-white/5'
                                 ]"
                             >
-                                <span class="text-sm text-blue-600 font-medium">{{ body.name }}</span>
-                                <span class="text-xs text-gray-500 ml-auto">{{ body.avg.toFixed(1) }}&deg;C</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10">
+                                        <NuxtImg src="/images/kaplya.png" width="22" height="22" class="h-5 w-5" />
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white group-hover:text-white">{{ body.name }}</p>
+                                        <p class="text-xs text-slate-400">Lat {{ body.lat.toFixed(2) }}, Lng {{ body.lng.toFixed(2) }}</p>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-100 ring-1 ring-white/20">
+                                    {{ body.avg.toFixed(1) }}°C
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -104,18 +119,19 @@ interface LakeWithTemp {
     name: string
     type: 'River' | 'Lake'
     location: string
+    lat: number
+    lng: number
     min: number
     avg: number
     max: number
 }
 
 const temperatureReadings = ref([
-    { id: 1, min: 3.4, avg: 4.8, max: 6.1},
-    { id: 2, min: 5.0, avg: 6.2, max: 7.4},
-    { id: 3, min: 4.6, avg: 5.9, max: 7.0},
-    { id: 4, min: 3.1, avg: 4.2, max: 5.6},
-    { id: 5, min: 4.0, avg: 5.3, max: 6.5},
-    { id: 6, min: 3.8, avg: 5.0, max: 6.2}
+    { id: 1, min: 2.4, avg: 3.8, max: 5.1},
+    { id: 2, min: 4.0, avg: 5.2, max: 6.4},
+    { id: 3, min: 3.6, avg: 4.9, max: 6.0},
+    { id: 4, min: 2.1, avg: 3.2, max: 4.6},
+    { id: 6, min: 2.8, avg: 4.0, max: 6.2}
 ])
 
 const temperatureBodies = computed<LakeWithTemp[]>(() => {
@@ -126,6 +142,8 @@ const temperatureBodies = computed<LakeWithTemp[]>(() => {
             name: lake.name,
             type: lake.status === 'river' ? 'River' : 'Lake',
             location: `${lake.lat.toFixed(2)}, ${lake.lng.toFixed(2)}`,
+            lat: lake.lat,
+            lng: lake.lng,
             min: reading?.min ?? 0,
             avg: reading?.avg ?? 0,
             max: reading?.max ?? 0,
@@ -152,6 +170,6 @@ const summaryCards = computed(() => [
 
 <style>
 .frame_style{
-    @apply w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-400 rounded-xl flex items-center justify-center;
+    @apply w-12 h-12 bg-blue-400 rounded-xl flex items-center justify-center;
 }
 </style>
